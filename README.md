@@ -1,6 +1,8 @@
 Uncap
 =====
 
+[한국어](./README_ko.md)
+
 Map Caps Lock key to Escape key, or any to any key, on Windows systems.
 
 [![Download][Download SVG]][Download URL]
@@ -509,3 +511,4 @@ Support
 
 To report bugs, suggest improvements, or ask questions, please visit
 <https://github.com/susam/uncap/issues>.
+
