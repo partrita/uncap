@@ -289,7 +289,6 @@ PC 키보드의 경우 키 코드는 일반적으로 `66`입니다.
 
 위 명령어에서 `keycode`가 사용되었습니다. 위 명령어에서 `keysym Escape = Caps_Lock`을 대신 사용하면 Caps Lock 키를 Caps Lock처럼 작동하도록 되돌리는 것과 함께 Escape 키의 동작도 Caps Lock처럼 작동하도록 변경됩니다. `keycode 66 = Caps_Lock`을 사용하면 Caps Lock 키의 동작만 복원됩니다.
 
-
 ### Linux: loadkeys
 
 리눅스에서는 `loadKeys` 명령어를 사용하여 콘솔에서 한 키를 다른 키로 매핑할 수 있습니다. 이 섹션에서는 Caps Lock 키를 Escape 키에 매핑하는 방법을 설명합니다. 이 섹션의 모든 명령어는 루트 또는 슈퍼유저로 실행해야 합니다.
