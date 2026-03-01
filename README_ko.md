@@ -80,7 +80,7 @@ Uncap은 단일 파일 실행 파일입니다: [`uncap.exe`][Download URL].
 
 위의 단계에서 Caps Lock 키는 `0x14:0xa2`를 Uncap에 인수로 지정하여 왼쪽 Control 키에 매핑됩니다. Caps Lock의 가상 키 코드는 `0x14`이고 Control 키의 가상 키 코드는 `0xa2`입니다. 따라서 인수 `0x14:0xa2`는 Caps Lock 키를 Control 키에 매핑합니다.
 
-모든 키에 대한 가상 키 코드 목록은 <https://msdn.microsoft.com/library/windows/desktop/dd375731.aspx>에서 찾을 수 있습니다.
+모든 키에 대한 가상 키 코드 목록은 <https://learn.microsoft.com/windows/win32/inputdev/virtual-key-codes>에서 찾을 수 있습니다.
 
 
 사용법
@@ -88,7 +88,7 @@ Uncap은 단일 파일 실행 파일입니다: [`uncap.exe`][Download URL].
 
 Uncap이 인수 없이 실행되면 Caps Lock 키를 Escape 키에 매핑합니다. 인수를 사용하여 Caps Lock 키를 모든 키에, 모든 키를 모든 키에 매핑하거나 모든 키를 비활성화할 수 있습니다.
 
-각 인수는 <https://msdn.microsoft.com/library/windows/desktop/dd375731.aspx>의 가상 키 코드를 콜론으로 구분한 쌍입니다.
+각 인수는 <https://learn.microsoft.com/windows/win32/inputdev/virtual-key-codes>의 가상 키 코드를 콜론으로 구분한 쌍입니다.
 
 가상 키 코드는 위 URL에 언급된 16진수 정수 또는 이에 상응하는 10진수 표기법으로 지정할 수 있습니다. 이러한 세부 정보는 아래 예제 목록에 설명되어 있습니다.
 

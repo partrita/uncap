@@ -232,12 +232,20 @@ void logKey(int nCode, WPARAM wParam, LPARAM lParam)
     }
 
     /* Translate virtual-key code to string notation. */
-    if (p->vkCode == VK_RETURN)
+    if (p->vkCode == VK_BACK)
+        sprintf(vkStr, "BACK");
+    else if (p->vkCode == VK_TAB)
+        sprintf(vkStr, "TAB");
+    else if (p->vkCode == VK_RETURN)
         sprintf(vkStr, "RETURN");
     else if (p->vkCode == VK_CAPITAL)
         sprintf(vkStr, "CAPITAL");
     else if (p->vkCode == VK_ESCAPE)
         sprintf(vkStr, "ESCAPE");
+    else if (p->vkCode == VK_SPACE)
+        sprintf(vkStr, "SPACE");
+    else if (p->vkCode == VK_DELETE)
+        sprintf(vkStr, "DELETE");
     else if (p->vkCode == VK_LCONTROL)
         sprintf(vkStr, "LCONTROL");
     else if (p->vkCode == VK_RCONTROL)
@@ -246,6 +254,10 @@ void logKey(int nCode, WPARAM wParam, LPARAM lParam)
         sprintf(vkStr, "LMENU");
     else if (p->vkCode == VK_RMENU)
         sprintf(vkStr, "RMENU");
+    else if (p->vkCode == VK_LSHIFT)
+        sprintf(vkStr, "LSHIFT");
+    else if (p->vkCode == VK_RSHIFT)
+        sprintf(vkStr, "RSHIFT");
     else if (p->vkCode == VK_LWIN)
         sprintf(vkStr, "LWIN");
     else if (p->vkCode == VK_RWIN)
@@ -432,7 +444,7 @@ void showHelp(void)
 "overridden by specifying a new mapping for Caps Lock key. Any key\n"
 "may be mapped to any key with one or more MAP_KEY:TO_KEY arguments.\n"
 "Each argument is a colon separated pair of virtual-key codes from\n"
-"<https://msdn.microsoft.com/library/windows/desktop/dd375731.aspx>.\n\n"
+"<https://learn.microsoft.com/windows/win32/inputdev/virtual-key-codes>.\n\n"
 
 "The virtual-key code may be specified either as hexadecimal integer\n"
 "as mentioned in the above URL or its equivalent decimal notation.\n\n";

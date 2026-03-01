@@ -114,7 +114,7 @@ Caps Lock is `0x14` and the virtual-key code of Control key is `0xa2`.
 Therefore, the argument `0x14:0xa2` maps Caps Lock key to Control key.
 
 The list of virtual-key codes for every key can be found at
-<https://msdn.microsoft.com/library/windows/desktop/dd375731.aspx>.
+<https://learn.microsoft.com/windows/win32/inputdev/virtual-key-codes>.
 
 
 Usage
@@ -125,7 +125,7 @@ key. It may be run with arguments to map Caps Lock key to any key, any
 key to any key, or disable any key.
 
 Each argument is a colon separated pair of virtual-key codes from
-<https://msdn.microsoft.com/library/windows/desktop/dd375731.aspx>.
+<https://learn.microsoft.com/windows/win32/inputdev/virtual-key-codes>.
 
 The virtual-key code may be specified either as hexadecimal integer as
 mentioned in the above URL or its equivalent decimal notation. These
