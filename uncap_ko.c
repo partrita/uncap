@@ -201,7 +201,7 @@ void logKey(int nCode, WPARAM wParam, LPARAM lParam)
 {
     const KBDLLHOOKSTRUCT *p = (KBDLLHOOKSTRUCT *) lParam;
 
-    char wParamStr[16];
+    char wParamStr[16] = "UNKNOWN";
     char vkStr[16];
     char extStr[16];
     char lowStr[16];
@@ -303,8 +303,14 @@ void logKey(int nCode, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
     KBDLLHOOKSTRUCT *p = (KBDLLHOOKSTRUCT *) lParam;
-    WORD keyCode = (WORD) p->vkCode;
-    WORD mapCode = my.keymap[keyCode];
+    WORD keyCode;
+    WORD mapCode;
+
+    if (nCode < 0)
+        return CallNextHookEx(my.hook, nCode, wParam, lParam);
+
+    keyCode = (WORD) p->vkCode;
+    mapCode = (keyCode < 256) ? my.keymap[keyCode] : keyCode;
 
     if (my.debug || my.file) {
         logKey(nCode, wParam, lParam);
@@ -313,8 +319,7 @@ LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam)
     if (mapCode == 0) {
         /* 눌린 키가 매핑되지 않은 경우 키 누름을 비활성화합니다. */
         return 1;
-    } else if (keyCode != mapCode && p->dwExtraInfo != UNCAP_INFO &&
-               nCode >= 0) {
+    } else if (keyCode != mapCode && p->dwExtraInfo != UNCAP_INFO) {
         /* 키가 매핑된 경우 매핑된 키로 변환합니다. */
         INPUT inputs[1];
         PKEYBDINPUT ki = &inputs[0].ki;
@@ -355,7 +360,7 @@ enum action kill(void)
     /* 시스템에서 실행 중인 모든 프로세스의 스냅샷을 찍습니다. */
     snapshotHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (snapshotHandle == NULL) {
-        sprintf(my.error, "Cannot take snapshot of processes; ",
+        sprintf(my.error, "Cannot take snapshot of processes; "
                           "error: %lu.", GetLastError());
         return FAIL;
     }
@@ -363,7 +368,7 @@ enum action kill(void)
     /* 스냅샷의 각 프로세스를 반복하기 시작합니다. */
     entry.dwSize = sizeof entry;
     if (!Process32First(snapshotHandle, &entry)) {
-        sprintf(my.error, "Cannot retrieve process from snapshot; ",
+        sprintf(my.error, "Cannot retrieve process from snapshot; "
                           "error: %lu.", GetLastError());
         return FAIL;
     }
@@ -400,7 +405,7 @@ enum action kill(void)
         /* 이 프로그램의 다른 인스턴스를 종료합니다. */
         if (TerminateProcess(processHandle, 0)) {
             printf("Terminated %s (PID %lu).\n",
-                   entry.szExeFile, entry.th32ProcessID, GetLastError());
+                   entry.szExeFile, entry.th32ProcessID);
         } else {
             error("Cannot terminate %s (PID %lu); error %lu.\n",
                   entry.szExeFile, entry.th32ProcessID, GetLastError());

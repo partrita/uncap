@@ -203,7 +203,7 @@ void logKey(int nCode, WPARAM wParam, LPARAM lParam)
 {
     const KBDLLHOOKSTRUCT *p = (KBDLLHOOKSTRUCT *) lParam;
 
-    char wParamStr[16];
+    char wParamStr[16] = "UNKNOWN";
     char vkStr[16];
     char extStr[16];
     char lowStr[16];
@@ -306,8 +306,14 @@ Map one key to another key.
 LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
     KBDLLHOOKSTRUCT *p = (KBDLLHOOKSTRUCT *) lParam;
-    WORD keyCode = (WORD) p->vkCode;
-    WORD mapCode = my.keymap[keyCode];
+    WORD keyCode;
+    WORD mapCode;
+
+    if (nCode < 0)
+        return CallNextHookEx(my.hook, nCode, wParam, lParam);
+
+    keyCode = (WORD) p->vkCode;
+    mapCode = (keyCode < 256) ? my.keymap[keyCode] : keyCode;
 
     if (my.debug || my.file) {
         logKey(nCode, wParam, lParam);
@@ -316,8 +322,7 @@ LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam)
     if (mapCode == 0) {
         /* If key pressed is unmapped, disable the key press. */
         return 1;
-    } else if (keyCode != mapCode && p->dwExtraInfo != UNCAP_INFO &&
-               nCode >= 0) {
+    } else if (keyCode != mapCode && p->dwExtraInfo != UNCAP_INFO) {
         /* If key is mapped, translate it to what it is mapped to. */
         INPUT inputs[1];
         PKEYBDINPUT ki = &inputs[0].ki;
@@ -360,7 +365,7 @@ enum action kill(void)
     /* Take a snapshot of all processes running on the system. */
     snapshotHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (snapshotHandle == NULL) {
-        sprintf(my.error, "Cannot take snapshot of processes; ",
+        sprintf(my.error, "Cannot take snapshot of processes; "
                           "error: %lu.", GetLastError());
         return FAIL;
     }
@@ -368,7 +373,7 @@ enum action kill(void)
     /* Begin iterating through each process in the snapshot. */
     entry.dwSize = sizeof entry;
     if (!Process32First(snapshotHandle, &entry)) {
-        sprintf(my.error, "Cannot retrieve process from snapshot; ",
+        sprintf(my.error, "Cannot retrieve process from snapshot; "
                           "error: %lu.", GetLastError());
         return FAIL;
     }
@@ -406,7 +411,7 @@ enum action kill(void)
         /* Terminate another instance of this program. */
         if (TerminateProcess(processHandle, 0)) {
             printf("Terminated %s (PID %lu).\n",
-                   entry.szExeFile, entry.th32ProcessID, GetLastError());
+                   entry.szExeFile, entry.th32ProcessID);
         } else {
             error("Cannot terminate %s (PID %lu); error %lu.\n",
                   entry.szExeFile, entry.th32ProcessID, GetLastError());

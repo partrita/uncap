@@ -511,4 +511,3 @@ Support
 
 To report bugs, suggest improvements, or ask questions, please visit
 <https://github.com/susam/uncap/issues>.
-
