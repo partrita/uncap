@@ -204,13 +204,13 @@ void logKey(int nCode, WPARAM wParam, LPARAM lParam)
     const KBDLLHOOKSTRUCT *p = (KBDLLHOOKSTRUCT *) lParam;
 
     char wParamStr[16] = "UNKNOWN";
-    char vkStr[16];
-    char extStr[16];
-    char lowStr[16];
-    char injStr[16];
-    char altStr[16];
-    char upStr[16];
-    char uncapStr[16];
+    char vkStr[16] = {0};
+    char extStr[16] = {0};
+    char lowStr[16] = {0};
+    char injStr[16] = {0};
+    char altStr[16] = {0};
+    char upStr[16] = {0};
+    char uncapStr[16] = {0};
 
     /* Translate identifier of keyboard message to string notation. */
     switch (wParam) {
